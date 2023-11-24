@@ -1,1 +1,4 @@
+ONBOARDING MANAGEMENT SYSTEM  ~ Goloka IT
+The Onboarding Management System developed by Goloka IT offers a comprehensive solution for efficient management of the applicant interview process within a company. This system aims to streamline and optimize the entire onboarding journey, from initial applicant screening to final selection and hiring. By integrating various tools and features, it simplifies the administrative tasks involved in managing interviews, scheduling, and candidate assessments.
 
+One of the key features of this system is its user-friendly interface, designed to cater to the needs of both HR professionals and hiring managers. It centralizes communication channels, allowing seamless collaboration and feedback exchange among team members involved in the hiring process. Additionally, the system offers customizable templates for interview assessments and evaluations, ensuring a standardized and fair evaluation process for all applicants.
