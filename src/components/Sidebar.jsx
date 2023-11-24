@@ -58,11 +58,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between gap-2 px-2  py-5.5 lg:py-6.5">
-        <NavLink to="/" className="flex items-center">
-          <img src={Logo} className="h-25" alt="Logo" />
-          <h1 className="font-bold text-4xl">Golokait</h1>
-        </NavLink>
+      <div className="flex items-center justify-between px-2 py-1">
+        <div className="m-auto pt-7">
+          {' '}
+          <NavLink to="/" className="flex items-center">
+            <img src={Logo} className=" m-auto h-20" alt="Logo" />
+            {/* <h1 className="text-4xl font-bold">Golokait</h1> */}
+          </NavLink>
+        </div>
 
         <button
           ref={trigger}
@@ -226,7 +229,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   </svg>
                   Applicants
                 </NavLink>
-                
               </li>
               {/* <!-- Menu Item Calendar --> */}
               <li>
