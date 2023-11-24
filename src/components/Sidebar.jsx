@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import Logo from '../images/logo/logo.svg';
+import Logo from '../images/logo/logo.png';
 import SidebarLinkGroup from './SidebarLinkGroup';
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
@@ -58,10 +58,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <NavLink to="/">
-          <img src={Logo} alt="Logo" />
-        </NavLink>
+      <div className="flex items-center justify-between px-2 py-1">
+        <div className="m-auto pt-7">
+          {' '}
+          <NavLink to="/" className="flex items-center">
+            <img src={Logo} className=" m-auto h-20" alt="Logo" />
+            {/* <h1 className="text-4xl font-bold">Golokait</h1> */}
+          </NavLink>
+        </div>
 
         <button
           ref={trigger}
