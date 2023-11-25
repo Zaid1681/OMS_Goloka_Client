@@ -49,13 +49,14 @@ function App() {
               </Suspense>
             }
           />
-          {/* <Route
+          <Route
             path="/forms/form-elements"
             element={
               <Suspense fallback={<Loader />}>
                 <FormElements />
               </Suspense>
             }
+          />
           <Route
             path="/forms/form-layout"
             element={
@@ -64,7 +65,6 @@ function App() {
               </Suspense>
             }
           />
-          /> */}
           <Route
             path="/applicants"
             element={
