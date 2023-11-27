@@ -1,0 +1,22 @@
+.ant-modal .ant-modal-content {
+  /* background: ; */
+  background: #20293c !important;
+  color: white !important;
+}
+.custom-form .ant-form-item-label > label {
+  color: white !important;
+}
+label {
+  color: white !important;
+}
+input {
+  background-color: #20293c !important;
+}
+
+.ant-modal-title {
+  background-color: #20293c;
+  color: white !important;
+}
+.ant-modal .ant-modal-close {
+  color: white !important;
+}

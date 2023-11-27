@@ -27,7 +27,7 @@ const Login = () => {
     try {
       const res = await axios.post(
         // "https://bookingappbackend.onrender.com/api/auth/login",
-        'http://localhost:8080/api/auth/login',
+        'http://localhost:8000/api/auth/login',
         credentials
       );
       console.log('user logged in sucessfully');
