@@ -20,3 +20,16 @@ input {
 .ant-modal .ant-modal-close {
   color: white !important;
 }
+button {
+  color: text !important;
+}
+
+.ant-btn {
+  color: white !important;
+}
+.ant-pagination-item-link {
+  color: white !important;
+}
+ant-pagination-item {
+  color: white !important;
+}

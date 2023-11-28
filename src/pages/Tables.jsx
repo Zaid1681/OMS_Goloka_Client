@@ -10,10 +10,10 @@ const Tables = () => {
       <Breadcrumb pageName="Tables" />
 
       <div className="flex flex-col gap-10">
-        <ApplicantsTable/>
-        <TableOne />
+        <ApplicantsTable />
+        {/* <TableOne />
         <TableTwo />
-        <TableThree />
+        <TableThree /> */}
       </div>
     </>
   );

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Tag, Input, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import axios from 'axios';
 import BrandOne from '../images/brand/brand-01.svg'; // Import other brand images as needed
 import './ApplicantTable.css';
 import EditApplicant from './EditApplicant';
@@ -8,6 +9,7 @@ import EditApplicant from './EditApplicant';
 const ApplicantsTables = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
+  const [data, setData] = useState([]);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -19,6 +21,15 @@ const ApplicantsTables = () => {
     clearFilters();
     setSearchText('');
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(`http://localhost:8000/api/getApplicants`);
+      // console.log(res.data);
+      setData(res.data.applicants);
+    };
+    // fetchVideo();
+    fetchData();
+  }, []);
 
   const getColumnSearchProps = (dataIndex, columnTitle) => ({
     filterDropdown: ({
@@ -66,64 +77,159 @@ const ApplicantsTables = () => {
       ),
   });
 
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      gender: 'Male',
-      // age: 32,
+  // const data = [
+  //   {
+  //     key: '1',
+  //     name: 'John Brown',
+  //     gender: 'Male',
+  //     // age: 32,
 
-      role: 'Web Developer',
-      round: 'Round -2 Ongoing',
-      status: 'Ongoing',
-      dob: '23/10/200',
-      email: 'zaidkahn@gmail.com',
-      contact: 9579888546,
-      resume: 'resume link',
-      about: 'hello i am zaid',
-      remark1: 'hello in round-1 it is get rejected due to the followig reason',
-      remark2: '',
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      gender: 'Male',
-      age: 42,
-      role: 'App Developer',
-      round: 'Round -2 Ongoing',
+  //     role: 'Web Developer',
+  //     round: 'Round -2 Scheduled',
+  //     status: 'Ongoing',
+  //     dob: '23/10/2001',
+  //     email: 'John@gmail.com',
+  //     contact: 9579888546,
+  //     resume: 'resume link',
+  //     about: 'hello i am zaid',
+  //     remark1: 'hello in round-1 it is get rejected due to the followig reason',
+  //     remark2: 'remark02 rejected',
+  //   },
+  //   {
+  //     key: '2',
+  //     name: 'Jim Green',
+  //     gender: 'Male',
+  //     age: 42,
+  //     role: 'App Developer',
+  //     email: 'Jim@gmail.com',
 
-      status: 'New',
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      gender: 'Male',
-      role: 'Graphic Design',
-      round: 'Round -1 Ongoing',
-      status: 'Rejected',
-    },
-    {
-      key: '4',
-      name: 'Jim Red',
-      age: 32,
-      gender: 'Female',
-      role: 'Web Developer',
-      round: 'Round -2 Ongoing',
+  //     round: 'Round-1 Completed',
 
-      status: 'Ongoing',
-    },
-    {
-      key: '4',
-      name: 'Jim Red',
-      age: 32,
-      gender: 'Female',
-      role: 'Web Developer',
-      round: 'Round -2 Ongoing',
+  //     status: 'New',
+  //   },
+  //   {
+  //     key: '3',
+  //     name: 'Joe Black',
+  //     age: 32,
+  //     gender: 'Male',
+  //     role: 'Graphic Design',
+  //     round: 'Round-1 Completed',
+  //     email: 'Joe@gmail.com',
+  //     status: 'Rejected',
+  //   },
+  //   {
+  //     key: '4',
+  //     name: 'Jim Red',
+  //     age: 32,
+  //     gender: 'Female',
+  //     role: 'Web Developer',
+  //     email: 'Joe@gmail.com',
 
-      status: 'Ongoing',
-    },
-  ];
+  //     round: 'Round-1 Completed',
+
+  //     status: 'Ongoing',
+  //   },
+  //   {
+  //     key: '4',
+  //     name: 'Jim Red',
+  //     age: 32,
+  //     gender: 'Female',
+  //     role: 'Web Developer',
+  //     round: 'Round-1 Completed',
+
+  //     status: 'Ongoing',
+  //   },
+  //   {
+  //     key: '4',
+  //     name: 'Jim Red',
+  //     age: 32,
+  //     gender: 'Female',
+  //     role: 'Web Developer',
+  //     round: 'Round-1 Completed',
+
+  //     status: 'Ongoing',
+  //   },
+  //   {
+  //     key: '4',
+  //     name: 'Jim Red',
+  //     age: 32,
+  //     gender: 'Female',
+  //     role: 'Web Developer',
+  //     round: 'Round-1 Completed',
+
+  //     status: 'Ongoing',
+  //   },
+  //   {
+  //     key: '4',
+  //     name: 'Jim Red',
+  //     age: 32,
+  //     gender: 'Female',
+  //     role: 'Web Developer',
+  //     round: 'Round-1 Scheduled',
+
+  //     status: 'Ongoing',
+  //   },
+  //   {
+  //     key: '4',
+  //     name: 'Jim Red',
+  //     age: 32,
+  //     gender: 'Female',
+  //     role: 'Web Developer',
+  //     round: 'Round-1 Completed',
+
+  //     status: 'Ongoing',
+  //   },
+  //   {
+  //     key: '4',
+  //     name: 'Jim Red',
+  //     age: 32,
+  //     gender: 'Female',
+  //     role: 'Web Developer',
+  //     round: 'Round-1 Completed',
+
+  //     status: 'Ongoing',
+  //   },
+  //   {
+  //     key: '4',
+  //     name: 'Jim Red',
+  //     age: 32,
+  //     gender: 'Female',
+  //     role: 'Web Developer',
+  //     round: 'Round-2 Scheduled',
+
+  //     status: 'Ongoing',
+  //   },
+  //   {
+  //     key: '4',
+  //     name: 'Jim Red',
+  //     age: 32,
+  //     gender: 'Female',
+  //     role: 'Web Developer',
+  //     round: 'Round-2 Completed',
+
+  //     status: 'Ongoing',
+  //   },
+  //   {
+  //     key: '4',
+  //     name: 'Jim Red',
+  //     age: 32,
+  //     gender: 'Female',
+  //     role: 'Web Developer',
+  //     round: 'Round-2 Completed',
+
+  //     status: 'Ongoing',
+  //   },
+  //   {
+  //     key: '4',
+  //     name: 'Jim Red',
+  //     age: 32,
+  //     gender: 'Female',
+  //     role: 'Web Developer',
+  //     round: 'Round-2 Completed',
+
+  //     status: 'Ongoing',
+  //   },
+  // ];
   const columns = [
     {
       title: 'Sr no',
@@ -134,14 +240,14 @@ const ApplicantsTables = () => {
     },
     {
       title: 'Name',
-      dataIndex: 'name',
-      ...getColumnSearchProps('name', 'Name'),
+      dataIndex: 'Name',
+      ...getColumnSearchProps('Name', 'Name'),
       className:
         'bg-boxdark bg-black p-2.5 text-white text-sm font-medium uppercase',
     },
     {
       title: 'Gender',
-      dataIndex: 'gender',
+      dataIndex: 'Gender',
       // defaultSortOrder: 'descend',
       // ...getColumnSearchProps('gender', 'Genders'),
 
@@ -150,21 +256,21 @@ const ApplicantsTables = () => {
     },
     {
       title: 'Role Applied',
-      dataIndex: 'role',
+      dataIndex: 'Role',
       ...getColumnSearchProps('role', 'Role'),
       className: 'bg-boxdark  text-white bg-black p-2.5 text-center',
     },
     {
       title: 'Status',
-      dataIndex: 'status',
+      dataIndex: 'Status',
       filters: [
-        {
-          text: 'Ongoing',
-          value: 'Ongoing',
-        },
         {
           text: 'New',
           value: 'New',
+        },
+        {
+          text: 'Ongoing',
+          value: 'Ongoing',
         },
         {
           text: 'Completed',
@@ -175,10 +281,10 @@ const ApplicantsTables = () => {
           value: 'Rejected',
         },
       ],
-      onFilter: (value, record) => record.status.indexOf(value) === 0,
-      render: (status) => {
+      onFilter: (value, record) => record.Status.indexOf(value) === 0,
+      render: (Status) => {
         let color = '';
-        switch (status) {
+        switch (Status) {
           case 'Ongoing':
             color = 'blue';
             break;
@@ -195,8 +301,8 @@ const ApplicantsTables = () => {
             color = '';
         }
         return (
-          <Tag color={color} key={status}>
-            {status}
+          <Tag color={color} key={Status}>
+            {Status}
           </Tag>
         );
       },
@@ -204,21 +310,29 @@ const ApplicantsTables = () => {
     },
     {
       title: 'Rounds',
-      dataIndex: 'round',
+      dataIndex: 'Round',
       filters: [
         {
-          text: 'Round -1 Ongoing',
-          value: 'Round -1 Ongoing',
+          text: 'Round-1 Scheduled ',
+          value: 'Round-1 Scheduled',
         },
         {
-          text: 'Round -2 Ongoing',
-          value: 'Round -2 Ongoing',
+          text: 'Round-2 Scheduled',
+          value: 'Round-2 Scheduled',
+        },
+        {
+          text: 'Round-1 Completed',
+          value: 'Round-1 Completed',
+        },
+        {
+          text: 'Round-2 Completed',
+          value: 'Round-2 Completed',
         },
       ],
-      onFilter: (value, record) => record.round.indexOf(value) === 0,
-      render: (round) => {
+      onFilter: (value, record) => record.Round.indexOf(value) === 0,
+      render: (Round) => {
         let color = '';
-        switch (round) {
+        switch (Round) {
           case 'Round -1 Ongoing':
             color = 'cyan';
             break;
@@ -235,8 +349,8 @@ const ApplicantsTables = () => {
             color = '';
         }
         return (
-          <Tag color={color} key={round}>
-            {round}
+          <Tag color={color} key={Round}>
+            {Round}
           </Tag>
         );
       },
@@ -244,22 +358,14 @@ const ApplicantsTables = () => {
     },
     {
       title: 'Applied Date',
-      dataIndex: 'date',
+      dataIndex: 'Date',
       render: (_, record) => <h1>21 / Nov / 2023</h1>,
       className: 'bg-black text-white bg-boxdark p-2.5 text-center',
     },
     {
       title: 'Details',
       dataIndex: 'viewMore',
-      render: (_, record) => (
-        // <button
-        //   className="responsive-button rounded bg-primary px-4 py-2 text-white"
-        //   onClick={() => handleViewMore(record)}
-        // >
-        //   View More
-        // </button>
-        <EditApplicant data={record} />
-      ),
+      render: (_, record) => <EditApplicant data={record} />,
       className: 'bg-black text-white bg-boxdark p-2.5 text-center',
     },
   ];
