@@ -44,9 +44,9 @@ const EditApplicant = ({ data }) => {
   const [componentDisabled, setComponentDisabled] = useState(true);
   const [disabled, setDisabled] = useState(true);
 
-  const [firstRemark, setfirstRemark] = useState(data?.remark1 || ''); // Use data.remark1 as initial value
-  const [secondRemark, setsecondRemark] = useState(data?.remark2 || ''); // Use data.remark1 as initial value
-  const [selectedStatus, setselectedStatus] = useState(data?.status || ''); // Use data.remark1 as initial value
+  const [firstRemark, setfirstRemark] = useState(data?.Remark1 || ''); // Use data.remark1 as initial value
+  const [secondRemark, setsecondRemark] = useState(data?.Remark2 || ''); // Use data.remark1 as initial value
+  const [selectedStatus, setselectedStatus] = useState(data?.Status || ''); // Use data.remark1 as initial value
 
   //   modal useState
   const handleCancel = () => {
@@ -143,7 +143,7 @@ const EditApplicant = ({ data }) => {
                       <input
                         type="email"
                         placeholder="Enter your email address"
-                        defaultValue={data?.email}
+                        defaultValue={data?.Email}
                         disabled
                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       />
@@ -158,7 +158,7 @@ const EditApplicant = ({ data }) => {
                       </label>
                       <input
                         type="text"
-                        defaultValue={data?.role}
+                        defaultValue={data?.Role}
                         disabled
                         placeholder="Select subject"
                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -170,7 +170,7 @@ const EditApplicant = ({ data }) => {
                       </label>
                       <input
                         type="text"
-                        defaultValue={data?.gender}
+                        defaultValue={data?.Gender}
                         disabled
                         placeholder="Select subject"
                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -183,7 +183,7 @@ const EditApplicant = ({ data }) => {
                       </label>
                       <input
                         type="text"
-                        defaultValue={data?.dob}
+                        defaultValue={data?.Dob}
                         disabled
                         placeholder="Select subject"
                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -236,12 +236,12 @@ const EditApplicant = ({ data }) => {
                       <div className="relative z-20 w-full bg-transparent dark:bg-form-input">
                         <select
                           className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                          defaultValue={data?.round}
+                          defaultValue={data?.Round}
                         >
                           <option value="">Select Rounds</option>
-                          <option value="">Round-1 Ongoing</option>
+                          <option value="">Round-1 Scheduled</option>
                           <option value="">Round-1 Completed</option>
-                          <option value="">Round-2 Ongoing</option>
+                          <option value="">Round-2 Scheduled</option>
                           <option value="">Round-2 Completed</option>
                           {/* <option value="">Canada</option> */}
                         </select>
@@ -304,7 +304,7 @@ const EditApplicant = ({ data }) => {
                       <textarea
                         rows={6}
                         placeholder="Type your remark"
-                        defaultValue={data?.about}
+                        defaultValue={data?.About}
                         disabled={disabled}
                         onChange={onChangeRemark1}
                         value={firstRemark}
@@ -323,7 +323,7 @@ const EditApplicant = ({ data }) => {
                         placeholder="Type your message"
                         disabled={disabled}
                         onChange={onChangeRemark2}
-                        // defaultValue={data?.remark1}
+                        defaultValue={data?.Remark1}
                         value={secondRemark} // Use state value here
                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       ></textarea>

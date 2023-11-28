@@ -1,10 +1,12 @@
 import Breadcrumb from '../components/Breadcrumb';
-import HrInterviewScheduling from '../components/InterviewSchedule';
+import InterviewScheduling from '../components/InterviewSchedule';
+import InterviewDetails from '../components/InterviewDetails';
 
 const Calendar = () => {
   return (
     <>
-      <HrInterviewScheduling />
+      <InterviewScheduling />
+      <InterviewDetails />
 
       {/* <Breadcrumb pageName="Calendar" /> */}
 

@@ -9,6 +9,7 @@ import EditApplicant from './EditApplicant';
 const ApplicantsTables = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
+  const [data, setData] = useState([]);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -20,6 +21,15 @@ const ApplicantsTables = () => {
     clearFilters();
     setSearchText('');
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(`http://localhost:8000/api/getApplicants`);
+      // console.log(res.data);
+      setData(res.data.applicants);
+    };
+    // fetchVideo();
+    fetchData();
+  }, []);
 
   const getColumnSearchProps = (dataIndex, columnTitle) => ({
     filterDropdown: ({
@@ -67,18 +77,6 @@ const ApplicantsTables = () => {
       ),
   });
 
-  // backend fetching code
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const fetchVideo = async () => {
-      const res = await axios.get(`http://localhost:8000/api/applicants`);
-      console.log(res.data.applicants);
-      setData(res.data.applicants);
-      // console.log('Applicants Data', applicant);
-    };
-    fetchVideo();
-  }, []);
-
   // const data = [
   //   {
   //     key: '1',
@@ -89,8 +87,8 @@ const ApplicantsTables = () => {
   //     role: 'Web Developer',
   //     round: 'Round -2 Scheduled',
   //     status: 'Ongoing',
-  //     dob: '23/10/200',
-  //     email: 'zaidkahn@gmail.com',
+  //     dob: '23/10/2001',
+  //     email: 'John@gmail.com',
   //     contact: 9579888546,
   //     resume: 'resume link',
   //     about: 'hello i am zaid',
@@ -103,6 +101,8 @@ const ApplicantsTables = () => {
   //     gender: 'Male',
   //     age: 42,
   //     role: 'App Developer',
+  //     email: 'Jim@gmail.com',
+
   //     round: 'Round-1 Completed',
 
   //     status: 'New',
@@ -113,7 +113,8 @@ const ApplicantsTables = () => {
   //     age: 32,
   //     gender: 'Male',
   //     role: 'Graphic Design',
-  //     round: 'Round-1 Scheduled',
+  //     round: 'Round-1 Completed',
+  //     email: 'Joe@gmail.com',
   //     status: 'Rejected',
   //   },
   //   {
@@ -122,6 +123,8 @@ const ApplicantsTables = () => {
   //     age: 32,
   //     gender: 'Female',
   //     role: 'Web Developer',
+  //     email: 'Joe@gmail.com',
+
   //     round: 'Round-1 Completed',
 
   //     status: 'Ongoing',
@@ -355,22 +358,14 @@ const ApplicantsTables = () => {
     },
     {
       title: 'Applied Date',
-      dataIndex: 'date',
+      dataIndex: 'Date',
       render: (_, record) => <h1>21 / Nov / 2023</h1>,
       className: 'bg-black text-white bg-boxdark p-2.5 text-center',
     },
     {
       title: 'Details',
       dataIndex: 'viewMore',
-      render: (_, record) => (
-        // <button
-        //   className="responsive-button rounded bg-primary px-4 py-2 text-white"
-        //   onClick={() => handleViewMore(record)}
-        // >
-        //   View More
-        // </button>
-        <EditApplicant data={record} />
-      ),
+      render: (_, record) => <EditApplicant data={record} />,
       className: 'bg-black text-white bg-boxdark p-2.5 text-center',
     },
   ];
