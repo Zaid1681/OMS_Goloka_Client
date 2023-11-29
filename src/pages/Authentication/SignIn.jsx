@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState('admin');
@@ -31,34 +32,21 @@ const Login = () => {
         credentials
       );
       console.log('user logged in sucessfully');
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Login Sucessfully',
+        showConfirmButton: false,
+        timer: 2500,
+      });
       navigate('/admin');
-      // dispatch({ type: 'LOGIN_SUCESS', payload: res.data });
-      // toast.success('Login Sucess', {
-      //   position: 'top-right',
-      //   autoClose: 1000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: 'light',
-      // });
-      // setTimeout(() => {
-      //   navigate('/');
-      // }, 1500);
     } catch (error) {
       console.log('Error :', error);
-      // toast.error('Login Failed', {
-      //   position: 'top-right',
-      //   autoClose: 5000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: 'light',
-      // });
-      // dispatch({ type: 'LOGIN_FAILURE', payload: error.response.data });
+      Swal.fire({
+        icon: 'error',
+        title: 'Error uploading file:',
+        text: 'Something went wrong!',
+      });
     }
 
     //handleClick
