@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, DatePicker, TimePicker, Select, AutoComplete } from 'antd';
 import { MailOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import moment from 'moment';
 
 const { Option } = Select;
 
@@ -114,8 +115,9 @@ const HrInterviewScheduling = () => {
   };
 
   const onFinish = async (values) => {
-    // Add logic to handle scheduling the interview and sending emails (e.g., API call).
-    console.log(values)
+    // Format the date to store only the date portion
+    values.date = moment(values.date).format('YYYY-MM-DD');
+  
     try {
       const response = await fetch('http://localhost:5000/api/interviews', {
         method: 'POST',
@@ -124,7 +126,7 @@ const HrInterviewScheduling = () => {
         },
         body: JSON.stringify(values),
       });
-
+  
       if (response.ok) {
         console.log('Interview Scheduled successfully');
         // Clear the form after successful scheduling
@@ -136,7 +138,6 @@ const HrInterviewScheduling = () => {
       console.error('Error scheduling interview:', error);
     }
   };
-
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark max-w-md mx-auto sm:px-7.5 xl:pb-1">
       <h1 className="text-2xl font-semibold mb-4">Schedule an Interview</h1>
