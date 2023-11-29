@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import Swal from 'sweetalert2';
 
 const Upload = () => {
   const [file, setFile] = useState(null);
@@ -24,7 +25,7 @@ const Upload = () => {
     } else {
       try {
         const response = await axios.post(
-          'http://localhost:8000/upload',
+          'http://localhost:8000/api/upload',
           formData,
           {
             headers: {
@@ -32,8 +33,25 @@ const Upload = () => {
             },
           }
         );
+
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Data Added Sucessfully ',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          // navigate('/');
+          window.location.reload();
+        }, 3000);
         console.log('File uploaded successfully:', response.data);
       } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error uploading file:',
+          text: 'Something went wrong!',
+        });
         console.error('Error uploading file:', error);
       }
     }
