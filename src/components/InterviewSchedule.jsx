@@ -9,6 +9,7 @@ import {
   AutoComplete,
 } from 'antd';
 import { MailOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import moment from 'moment';
 
 const { Option } = Select;
 
@@ -133,7 +134,9 @@ const InterviewScheduling = () => {
   const onFinish = async (values) => {
     // Add logic to handle scheduling the interview and sending emails (e.g., API call).
     console.log(values);
+  
     try {
+      // Send interview details to the server
       const response = await fetch('http://localhost:8000/api/interviews', {
         method: 'POST',
         headers: {
@@ -141,11 +144,50 @@ const InterviewScheduling = () => {
         },
         body: JSON.stringify(values),
       });
-
+  
       if (response.ok) {
         console.log('Interview Scheduled successfully');
+  
+        // // Send emails to the candidate and interviewer
+        // const emailResponse = await fetch('http://localhost:8000/api/sendEmail', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({
+        //     to: values.candidateEmail,
+        //     subject: 'Interview Scheduled',
+        //     text: 'Your interview has been scheduled. Please check your email for details.',
+        //   }),
+        // });
+  
+        // if (emailResponse.ok) {
+        //   console.log('Email sent to candidate successfully');
+        // } else {
+        //   console.error('Failed to send email to candidate:', emailResponse.statusText);
+        // }
+  
+        // const interviewerEmailResponse = await fetch('http://localhost:8000/api/sendEmail', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({
+        //     to: values.interviewerEmail,
+        //     subject: 'Interview Scheduled',
+        //     text: 'An interview has been scheduled. Please check your email for details.',
+        //   }),
+        // });
+  
+        // if (interviewerEmailResponse.ok) {
+        //   console.log('Email sent to interviewer successfully');
+        // } else {
+        //   console.error('Failed to send email to interviewer:', interviewerEmailResponse.statusText);
+        // }
+  
         // Clear the form after successful scheduling
         form.resetFields();
+        // onClose();
       } else {
         console.error('Failed to schedule interview:', response.statusText);
       }
@@ -154,9 +196,10 @@ const InterviewScheduling = () => {
     }
   };
 
+  
   return (
     <div className="mx-auto max-w-md rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <h1 className="mb-4 text-2xl font-semibold">Schedule an Interview</h1>
+      {/* <h1 className="mb-4 text-2xl font-semibold">Schedule an Interview</h1> */}
       <Form form={form} onFinish={onFinish} className="interview-form">
         <h1 className="my-1 text-black dark:text-white">Candidate Name</h1>
         <Form.Item name="candidateName" wrapperCol={{ span: 24 }}>
@@ -230,6 +273,7 @@ const InterviewScheduling = () => {
           <Button
             type="primary"
             htmlType="submit"
+            classNames="bg-primary"
             icon={<MailOutlined />}
             className="w-full"
           >

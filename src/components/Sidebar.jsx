@@ -252,7 +252,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       fill=""
                     />
                   </svg>
-                  Meetings
+                  Interviews
                 </NavLink>
               </li>
               {/* <!-- Menu Item Calendar --> */}
