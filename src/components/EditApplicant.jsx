@@ -23,7 +23,7 @@ import {
 import './Modal.css';
 const EditApplicant = ({ data }) => {
   const [open, setOpen] = useState(false);
-
+  // console.log(data?.remark1);
   const showModal = () => {
     setOpen(true);
   };
@@ -42,12 +42,40 @@ const EditApplicant = ({ data }) => {
     return e?.fileList;
   };
   const [componentDisabled, setComponentDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(true);
+
+  const [firstRemark, setfirstRemark] = useState(data?.Remark1 || ''); // Use data.remark1 as initial value
+  const [secondRemark, setsecondRemark] = useState(data?.Remark2 || ''); // Use data.remark1 as initial value
+  const [selectedStatus, setselectedStatus] = useState(data?.Status || ''); // Use data.remark1 as initial value
 
   //   modal useState
   const handleCancel = () => {
     setOpen(false);
   };
 
+  const onChangeRemark1 = (event) => {
+    setfirstRemark(event.target.value); // Update the state with the new textarea value
+  };
+  const onChangeRemark2 = (event) => {
+    setsecondRemark(event.target.value);
+
+    // Any other logic you might want to perform on change
+  };
+  const onChange = (e) => {
+    e.preventDefault();
+    console.log('checked = ', e.target.checked);
+    setChecked(e.target.checked);
+  };
+  const toggleDisabled = (e) => {
+    e.preventDefault();
+    setDisabled(!disabled);
+  };
+  const isRejectedSelected = selectedStatus === 'Rejected';
+
+  const handleChangeStatus = (event) => {
+    setselectedStatus(event.target.value); // Update the state with the new selected value
+    // Any other logic you might want to perform on change
+  };
   return (
     <>
       <Space>
@@ -56,7 +84,7 @@ const EditApplicant = ({ data }) => {
         </Button>
       </Space>
       <Modal
-        visible={open}
+        open={open}
         title="Applicant Details"
         onOk={handleOk}
         onCancel={handleCancel}
@@ -73,7 +101,6 @@ const EditApplicant = ({ data }) => {
         }}
         footer={(_, { OkBtn, CancelBtn }) => (
           <>
-            <Button>Custom Button</Button>
             <CancelBtn />
             <OkBtn />
           </>
@@ -93,7 +120,7 @@ const EditApplicant = ({ data }) => {
                     <p className="text-[1.05rem]">Status :</p>
                     <p className="  color-green mx-2 border-x-2  px-2 text-center text-[1.05rem] ">
                       {' '}
-                      {data?.status}
+                      {data?.Status}
                     </p>
                   </div>
                   <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
@@ -103,7 +130,7 @@ const EditApplicant = ({ data }) => {
                       </label>
                       <input
                         type="text"
-                        defaultValue={data?.name}
+                        defaultValue={data?.Name}
                         disabled
                         placeholder="Enter your first name"
                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -116,7 +143,7 @@ const EditApplicant = ({ data }) => {
                       <input
                         type="email"
                         placeholder="Enter your email address"
-                        defaultValue={data?.email}
+                        defaultValue={data?.Email}
                         disabled
                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       />
@@ -131,7 +158,7 @@ const EditApplicant = ({ data }) => {
                       </label>
                       <input
                         type="text"
-                        defaultValue={data?.role}
+                        defaultValue={data?.Role}
                         disabled
                         placeholder="Select subject"
                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -143,7 +170,7 @@ const EditApplicant = ({ data }) => {
                       </label>
                       <input
                         type="text"
-                        defaultValue={data?.gender}
+                        defaultValue={data?.Gender}
                         disabled
                         placeholder="Select subject"
                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -156,7 +183,7 @@ const EditApplicant = ({ data }) => {
                       </label>
                       <input
                         type="text"
-                        defaultValue={data?.dob}
+                        defaultValue={data?.Dob}
                         disabled
                         placeholder="Select subject"
                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -166,16 +193,20 @@ const EditApplicant = ({ data }) => {
                   <div className="gap-20 lg:flex">
                     <div className="mb-4.5 w-full">
                       <label className="mb-2.5 block text-black dark:text-white">
-                        Ongoing
+                        Status
                       </label>
                       <div className="relative z-20 w-full bg-transparent dark:bg-form-input">
-                        <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                          <option defaultValue={data?.round} value="">
-                            Type your subject
-                          </option>
-                          <option value="">Round -1 Ongoing </option>
-                          <option value="">Round -2 Ongoing </option>
-                          {/* <option value="">Canada</option> */}
+                        <select
+                          className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary "
+                          value={selectedStatus} // Set value attribute to manage the selected value
+                          onChange={handleChangeStatus}
+                          disabled={isRejectedSelected}
+                        >
+                          <option value="">Select Status</option>
+                          <option value="New">New</option>
+                          <option value="Ongoing">Ongoing</option>
+                          <option value="Selected">Selected</option>
+                          <option value="Rejected">Rejected</option>
                         </select>
                         <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                           <svg
@@ -200,16 +231,18 @@ const EditApplicant = ({ data }) => {
                     </div>
                     <div className="mb-4.5 w-full">
                       <label className="mb-2.5 block text-black dark:text-white">
-                        Completed
+                        Rounds
                       </label>
                       <div className="relative z-20 w-full bg-transparent dark:bg-form-input">
                         <select
                           className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                          defaultValue={data?.round}
+                          defaultValue={data?.Round}
                         >
-                          <option value="">Select</option>
-                          <option value="">Round-1 Completed </option>
-                          <option value="">Round-2 Complted</option>
+                          <option value="">Select Rounds</option>
+                          <option value="">Round-1 Scheduled</option>
+                          <option value="">Round-1 Completed</option>
+                          <option value="">Round-2 Scheduled</option>
+                          <option value="">Round-2 Completed</option>
                           {/* <option value="">Canada</option> */}
                         </select>
                         <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
@@ -234,21 +267,75 @@ const EditApplicant = ({ data }) => {
                       </div>
                     </div>
                   </div>
-
-                  <div className="mb-6">
+                  {/* About you  */}
+                  <div className="w-full">
+                    {' '}
                     <label className="mb-2.5 block text-black dark:text-white">
-                      Message
+                      About
                     </label>
                     <textarea
                       rows={6}
                       placeholder="Type your message"
+                      defaultValue={data?.About}
+                      disabled
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     ></textarea>
                   </div>
 
+                  <div className="my-5">
+                    {' '}
+                    <div className="mx-auto flex gap-5">
+                      {' '}
+                      <label className="mb-2.5 block text-lg text-black dark:text-white">
+                        Remark
+                      </label>
+                      <Button type="primary" onClick={toggleDisabled}>
+                        {/* {disabled ? 'unedit' : 'edit} */}
+                        {disabled ? 'Edit' : 'Lock'}
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="mb-6 justify-between gap-18 lg:flex">
+                    <div className="w-full">
+                      {' '}
+                      <label className="mb-2.5 block text-black dark:text-white">
+                        Round -1
+                      </label>
+                      <textarea
+                        rows={6}
+                        placeholder="Type your remark"
+                        defaultValue={data?.About}
+                        disabled={disabled}
+                        onChange={onChangeRemark1}
+                        value={firstRemark}
+                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      ></textarea>
+                      <Button href="/calendar" type="primary">
+                        Schedule Round-1
+                      </Button>
+                    </div>
+                    <div className="w-full">
+                      <label className="mb-2.5 block text-black dark:text-white">
+                        Round-2
+                      </label>
+                      <textarea
+                        rows={6}
+                        placeholder="Type your message"
+                        disabled={disabled}
+                        onChange={onChangeRemark2}
+                        defaultValue={data?.Remark1}
+                        value={secondRemark} // Use state value here
+                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      ></textarea>
+                      <Button href="/calendar" type="primary">
+                        Schedule Round-2
+                      </Button>
+                    </div>
+                  </div>
+                  {/* 
                   <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
                     Send Message
-                  </button>
+                  </button> */}
                 </div>
               </form>
             </div>

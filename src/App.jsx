@@ -5,6 +5,7 @@ import ECommerce from './pages/Dashboard/ECommerce';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Loader from './common/Loader';
+import Upload from './pages/Upload';
 
 const Calendar = lazy(() => import('./pages/Calendar'));
 const Chart = lazy(() => import('./pages/Chart'));
@@ -38,6 +39,14 @@ function App() {
             element={
               <Suspense fallback={<Loader />}>
                 <Calendar />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/upload"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Upload />
               </Suspense>
             }
           />

@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, DatePicker, TimePicker, Select, AutoComplete } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  DatePicker,
+  TimePicker,
+  Select,
+  AutoComplete,
+} from 'antd';
 import { MailOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 const { Option } = Select;
 
-const HrInterviewScheduling = () => {
+const InterviewScheduling = () => {
   const [form] = Form.useForm();
   const [originalCandidateOptions, setOriginalCandidateOptions] = useState([]);
   const [candidateOptions, setCandidateOptions] = useState([]);
@@ -17,9 +25,12 @@ const HrInterviewScheduling = () => {
     // Fetch candidate names for auto-suggestions from your server
     const fetchCandidateNames = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/applicants'); // Replace with your actual endpoint
+        const response = await fetch('http://localhost:8000/api/applicants'); // Replace with your actual endpoint
         const data = await response.json();
-        const options = data.map(candidate => ({ value: candidate.username, email: candidate.email }));
+        const options = data.map((candidate) => ({
+          value: candidate.Name,
+          email: candidate.Email,
+        }));
         setOriginalCandidateOptions(options);
         setCandidateOptions(options);
       } catch (error) {
@@ -30,9 +41,12 @@ const HrInterviewScheduling = () => {
     // Fetch technical team members for auto-suggestions
     const fetchTechTeamMembers = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/techTeam'); // Replace with your actual endpoint
+        const response = await fetch('http://localhost:8000/api/techTeam'); // Replace with your actual endpoint
         const data = await response.json();
-        const techTeamMemberOptions = data.map(member => ({ value: member.name, email: member.email }));
+        const techTeamMemberOptions = data.map((member) => ({
+          value: member.name,
+          email: member.email,
+        }));
         setTechTeamOptions(techTeamMemberOptions);
       } catch (error) {
         console.error('Error fetching technical team members:', error);
@@ -42,9 +56,12 @@ const HrInterviewScheduling = () => {
     // Fetch marketing team members for auto-suggestions
     const fetchMarketingTeamMembers = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/marketingTeam'); // Replace with your actual endpoint
+        const response = await fetch('http://localhost:8000/api/marketingTeam'); // Replace with your actual endpoint
         const data = await response.json();
-        const marketingTeamMemberOptions = data.map(member => ({ value: member.name, email: member.email }));
+        const marketingTeamMemberOptions = data.map((member) => ({
+          value: member.name,
+          email: member.email,
+        }));
         setMarketingTeamOptions(marketingTeamMemberOptions);
       } catch (error) {
         console.error('Error fetching marketing team members:', error);
@@ -62,8 +79,8 @@ const HrInterviewScheduling = () => {
       setCandidateOptions(originalCandidateOptions);
     } else {
       // Filter candidate options based on the input value
-      const filteredOptions = originalCandidateOptions.filter(
-        candidate => candidate.value.toLowerCase().includes(value.toLowerCase())
+      const filteredOptions = originalCandidateOptions.filter((candidate) =>
+        candidate.value.toLowerCase().includes(value.toLowerCase())
       );
 
       // Update the options in the AutoComplete
@@ -100,8 +117,8 @@ const HrInterviewScheduling = () => {
       setInterviewerOptions([]);
     } else {
       // Filter interviewer options based on the input value
-      const filteredOptions = interviewerOptions.filter(
-        interviewer => interviewer.value.toLowerCase().includes(value.toLowerCase())
+      const filteredOptions = interviewerOptions.filter((interviewer) =>
+        interviewer.value.toLowerCase().includes(value.toLowerCase())
       );
 
       // Update the options in the AutoComplete
@@ -115,11 +132,10 @@ const HrInterviewScheduling = () => {
   };
 
   const onFinish = async (values) => {
-    // Format the date to store only the date portion
-    values.date = moment(values.date).format('YYYY-MM-DD');
-  
+    // Add logic to handle scheduling the interview and sending emails (e.g., API call).
+    console.log(values);
     try {
-      const response = await fetch('http://localhost:5000/api/interviews', {
+      const response = await fetch('http://localhost:8000/api/interviews', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,14 +155,11 @@ const HrInterviewScheduling = () => {
     }
   };
   return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark max-w-md mx-auto sm:px-7.5 xl:pb-1">
-      <h1 className="text-2xl font-semibold mb-4">Schedule an Interview</h1>
+    <div className="mx-auto max-w-md rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <h1 className="mb-4 text-2xl font-semibold">Schedule an Interview</h1>
       <Form form={form} onFinish={onFinish} className="interview-form">
-        <h1 className="text-black my-1 dark:text-white">Candidate Name</h1>
-        <Form.Item
-          name="candidateName"
-          wrapperCol={{ span: 24 }}
-        >
+        <h1 className="my-1 text-black dark:text-white">Candidate Name</h1>
+        <Form.Item name="candidateName" wrapperCol={{ span: 24 }}>
           <AutoComplete
             options={candidateOptions}
             onChange={(value) => onCandidateNameChange(value)}
@@ -154,22 +167,16 @@ const HrInterviewScheduling = () => {
           />
         </Form.Item>
 
-        <h1 className="text-black my-1 dark:text-white">Interview Team</h1>
-        <Form.Item
-          name="interviewType"
-          wrapperCol={{ span: 24 }}
-        >
+        <h1 className="my-1 text-black dark:text-white">Interview Team</h1>
+        <Form.Item name="interviewType" wrapperCol={{ span: 24 }}>
           <Select onChange={onInterviewTypeChange}>
             <Option value="technical">Technical Team</Option>
             <Option value="marketing">Marketing Team</Option>
           </Select>
         </Form.Item>
 
-        <h1 className="text-black my-1 dark:text-white">Interviewer Name</h1>
-        <Form.Item
-          name="interviewerName"
-          wrapperCol={{ span: 24 }}
-        >
+        <h1 className="my-1 text-black dark:text-white">Interviewer Name</h1>
+        <Form.Item name="interviewerName" wrapperCol={{ span: 24 }}>
           <AutoComplete
             options={interviewerOptions} // Use the appropriate team options
             onChange={(value) => onInterviewerNameChange(value)}
@@ -177,67 +184,55 @@ const HrInterviewScheduling = () => {
           />
         </Form.Item>
 
-        <h1 className="text-black my-1 dark:text-white">Date</h1>
-        <Form.Item
-          name="date"
-          wrapperCol={{ span: 24 }}
-        >
-          <DatePicker
-            className='w-full'
-          />
+        <h1 className="my-1 text-black dark:text-white">Date</h1>
+        <Form.Item name="date" wrapperCol={{ span: 24 }}>
+          <DatePicker className="w-full" />
         </Form.Item>
 
-        <div className="flex my-1">
+        <div className="my-1 flex">
           <div className="w-1/2 pr-2">
             <h1 className="text-black dark:text-white">Starting Time</h1>
-            <Form.Item
-              name="startTime"
-              wrapperCol={{ span: 24 }}
-            >
+            <Form.Item name="startTime" wrapperCol={{ span: 24 }}>
               <TimePicker
                 prefix={<ClockCircleOutlined />}
                 placeholder="Select starting time"
                 format="HH:mm"
-                className='w-full '
+                className="w-full "
                 minuteStep={15}
               />
             </Form.Item>
           </div>
           <div className="w-1/2 pl-2">
             <h1 className="text-black dark:text-white">Ending Time</h1>
-            <Form.Item
-              name="endTime"
-              wrapperCol={{ span: 24 }}
-            >
+            <Form.Item name="endTime" wrapperCol={{ span: 24 }}>
               <TimePicker
                 prefix={<ClockCircleOutlined />}
                 placeholder="Select ending time"
                 format="HH:mm"
                 minuteStep={15}
-                className='w-full'
+                className="w-full"
               />
             </Form.Item>
           </div>
         </div>
 
-        <h1 className="text-black my-1 dark:text-white">Candidate Email</h1>
-        <Form.Item
-          name="candidateEmail"
-          wrapperCol={{ span: 24 }}
-        >
+        <h1 className="my-1 text-black dark:text-white">Candidate Email</h1>
+        <Form.Item name="candidateEmail" wrapperCol={{ span: 24 }}>
           <Input type="email" />
         </Form.Item>
 
-        <h1 className="text-black my-1 dark:text-white">Interviewer Email</h1>
-        <Form.Item
-          name="interviewerEmail"
-          wrapperCol={{ span: 24 }}
-        >
+        <h1 className="my-1 text-black dark:text-white">Interviewer Email</h1>
+        <Form.Item name="interviewerEmail" wrapperCol={{ span: 24 }}>
           <Input type="email" />
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <Button type="primary" htmlType="submit" icon={<MailOutlined />} className="w-full">
+          <Button
+            type="primary"
+            htmlType="submit"
+            icon={<MailOutlined />}
+            className="w-full"
+          >
             Schedule Interview and Send Emails
           </Button>
         </Form.Item>
@@ -246,4 +241,4 @@ const HrInterviewScheduling = () => {
   );
 };
 
-export default HrInterviewScheduling;
+export default InterviewScheduling;
